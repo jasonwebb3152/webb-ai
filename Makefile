@@ -1,3 +1,5 @@
+DB_URL = postgresql://root:secret@localhost:5432/webb_ai?sslmode=disable
+
 proto:
 	rm -rf api/pb/*.go
 	rm -rf doc/swagger/*.swagger.json
@@ -19,6 +21,9 @@ postgres:
 	docker run --name postgres18 --network bank-network -p 5432:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=secret -d postgres:18-alpine
 	docker exec -it postgres18 createdb --username=root --owner=root simple_bank
 
+migrateup:
+	migrate -path db/migration -database "$(DB_URL)" -verbose up
+
 build_docker:
 	docker build -t webb-ai-api:latest .
 
@@ -34,4 +39,4 @@ cluster_up:
 cluster_down:
 	kind delete cluster --name webb-ai-cluster
 
-.PHONY: proto sqlc test new_migration build_docker cluster_up cluster_down
+.PHONY: proto sqlc test mock new_migration postgres migrateup build_docker cluster_up cluster_down
