@@ -33,12 +33,12 @@ jobs:
     
     steps:
       - name: Checkout code
-      - run: actions/checkout@v3
+        run: actions/checkout@v3
 
       - name: Set up Go
         uses: actions/setup-go@v4
         with:
-          go-version: '1.24'
+          go-version: '1.25'
         id: go
 
       - name: Test
