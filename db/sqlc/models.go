@@ -211,7 +211,15 @@ type File struct {
 }
 
 type OnedriveSource struct {
-	TenantID string `json:"tenant_id"`
+	ID           uuid.UUID    `json:"id"`
+	Name         string       `json:"name"`
+	Description  pgtype.Text  `json:"description"`
+	Type         SourceType   `json:"type"`
+	Status       SourceStatus `json:"status"`
+	SecretsStore string       `json:"secrets_store"`
+	CreatedAt    time.Time    `json:"created_at"`
+	SourceType   string       `json:"source_type"`
+	TenantID     string       `json:"tenant_id"`
 }
 
 type S3Source struct {
@@ -222,6 +230,7 @@ type S3Source struct {
 	Status       SourceStatus `json:"status"`
 	SecretsStore string       `json:"secrets_store"`
 	CreatedAt    time.Time    `json:"created_at"`
+	SourceType   string       `json:"source_type"`
 	BucketName   string       `json:"bucket_name"`
 	Region       string       `json:"region"`
 }

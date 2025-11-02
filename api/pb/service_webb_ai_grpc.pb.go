@@ -20,6 +20,7 @@ const _ = grpc.SupportPackageIsVersion9
 
 const (
 	WebbAi_CreateUser_FullMethodName = "/pb.WebbAi/CreateUser"
+	WebbAi_LoginUser_FullMethodName  = "/pb.WebbAi/LoginUser"
 )
 
 // WebbAiClient is the client API for WebbAi service.
@@ -27,6 +28,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type WebbAiClient interface {
 	CreateUser(ctx context.Context, in *CreateUserRequest, opts ...grpc.CallOption) (*CreateUserResponse, error)
+	LoginUser(ctx context.Context, in *LoginUserRequest, opts ...grpc.CallOption) (*LoginUserResponse, error)
 }
 
 type webbAiClient struct {
@@ -47,11 +49,22 @@ func (c *webbAiClient) CreateUser(ctx context.Context, in *CreateUserRequest, op
 	return out, nil
 }
 
+func (c *webbAiClient) LoginUser(ctx context.Context, in *LoginUserRequest, opts ...grpc.CallOption) (*LoginUserResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(LoginUserResponse)
+	err := c.cc.Invoke(ctx, WebbAi_LoginUser_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // WebbAiServer is the server API for WebbAi service.
 // All implementations must embed UnimplementedWebbAiServer
 // for forward compatibility.
 type WebbAiServer interface {
 	CreateUser(context.Context, *CreateUserRequest) (*CreateUserResponse, error)
+	LoginUser(context.Context, *LoginUserRequest) (*LoginUserResponse, error)
 	mustEmbedUnimplementedWebbAiServer()
 }
 
@@ -64,6 +77,9 @@ type UnimplementedWebbAiServer struct{}
 
 func (UnimplementedWebbAiServer) CreateUser(context.Context, *CreateUserRequest) (*CreateUserResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateUser not implemented")
+}
+func (UnimplementedWebbAiServer) LoginUser(context.Context, *LoginUserRequest) (*LoginUserResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method LoginUser not implemented")
 }
 func (UnimplementedWebbAiServer) mustEmbedUnimplementedWebbAiServer() {}
 func (UnimplementedWebbAiServer) testEmbeddedByValue()                {}
@@ -104,6 +120,24 @@ func _WebbAi_CreateUser_Handler(srv interface{}, ctx context.Context, dec func(i
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WebbAi_LoginUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(LoginUserRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WebbAiServer).LoginUser(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WebbAi_LoginUser_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WebbAiServer).LoginUser(ctx, req.(*LoginUserRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // WebbAi_ServiceDesc is the grpc.ServiceDesc for WebbAi service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -114,6 +148,10 @@ var WebbAi_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CreateUser",
 			Handler:    _WebbAi_CreateUser_Handler,
+		},
+		{
+			MethodName: "LoginUser",
+			Handler:    _WebbAi_LoginUser_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

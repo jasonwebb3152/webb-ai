@@ -26,20 +26,25 @@ var File_service_webb_ai_proto protoreflect.FileDescriptor
 
 const file_service_webb_ai_proto_rawDesc = "" +
 	"\n" +
-	"\x15service_webb_ai.proto\x12\x02pb\x1a\x15rpc_create_user.proto\x1a\x1cgoogle/api/annotations.proto\x1a.protoc-gen-openapiv2/options/annotations.proto2\x93\x01\n" +
+	"\x15service_webb_ai.proto\x12\x02pb\x1a\x15rpc_create_user.proto\x1a\x14rpc_login_user.proto\x1a\x1cgoogle/api/annotations.proto\x1a.protoc-gen-openapiv2/options/annotations.proto2\x99\x02\n" +
 	"\x06WebbAi\x12\x88\x01\n" +
 	"\n" +
-	"CreateUser\x12\x15.pb.CreateUserRequest\x1a\x16.pb.CreateUserResponse\"K\x92A4\x12\x0fCreate new user\x1a!Use this API to create a new user\x82\xd3\xe4\x93\x02\x0e:\x01*\"\t/v1/usersB)Z'github.com/jasonwebb3152/webb-ai/api/pbb\x06proto3"
+	"CreateUser\x12\x15.pb.CreateUserRequest\x1a\x16.pb.CreateUserResponse\"K\x92A4\x12\x0fCreate new user\x1a!Use this API to create a new user\x82\xd3\xe4\x93\x02\x0e:\x01*\"\t/v1/users\x12\x83\x01\n" +
+	"\tLoginUser\x12\x14.pb.LoginUserRequest\x1a\x15.pb.LoginUserResponse\"I\x92A,\x12\fLogin a user\x1a\x1cUse this API to login a user\x82\xd3\xe4\x93\x02\x14:\x01*\"\x0f/v1/users/loginB)Z'github.com/jasonwebb3152/webb-ai/api/pbb\x06proto3"
 
 var file_service_webb_ai_proto_goTypes = []any{
 	(*CreateUserRequest)(nil),  // 0: pb.CreateUserRequest
-	(*CreateUserResponse)(nil), // 1: pb.CreateUserResponse
+	(*LoginUserRequest)(nil),   // 1: pb.LoginUserRequest
+	(*CreateUserResponse)(nil), // 2: pb.CreateUserResponse
+	(*LoginUserResponse)(nil),  // 3: pb.LoginUserResponse
 }
 var file_service_webb_ai_proto_depIdxs = []int32{
 	0, // 0: pb.WebbAi.CreateUser:input_type -> pb.CreateUserRequest
-	1, // 1: pb.WebbAi.CreateUser:output_type -> pb.CreateUserResponse
-	1, // [1:2] is the sub-list for method output_type
-	0, // [0:1] is the sub-list for method input_type
+	1, // 1: pb.WebbAi.LoginUser:input_type -> pb.LoginUserRequest
+	2, // 2: pb.WebbAi.CreateUser:output_type -> pb.CreateUserResponse
+	3, // 3: pb.WebbAi.LoginUser:output_type -> pb.LoginUserResponse
+	2, // [2:4] is the sub-list for method output_type
+	0, // [0:2] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
 	0, // [0:0] is the sub-list for extension extendee
 	0, // [0:0] is the sub-list for field type_name
@@ -51,6 +56,7 @@ func file_service_webb_ai_proto_init() {
 		return
 	}
 	file_rpc_create_user_proto_init()
+	file_rpc_login_user_proto_init()
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{

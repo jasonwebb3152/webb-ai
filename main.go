@@ -23,6 +23,7 @@ const (
 	DATABASE_URL        = "postgresql://root:secret@localhost:5432/webb_ai?sslmode=disable"
 	HTTP_SERVER_ADDRESS = "0.0.0.0:8080"
 	MIGRATION_URL       = "file://db/migration"
+	SYMMETRIC_KEY       = "12345678901234567890123456789012"
 )
 
 func main() {
@@ -71,9 +72,12 @@ func runHttpGatewayServer(store db.Store) {
 
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
-	server := gapi.NewServer(store)
+	server, err := gapi.NewServer(store, SYMMETRIC_KEY)
+	if err != nil {
+		log.Fatalf("Failed to create server (token maker): %s", err)
+	}
 
-	err := pb.RegisterWebbAiHandlerServer(ctx, grpcMux, server)
+	err = pb.RegisterWebbAiHandlerServer(ctx, grpcMux, server)
 	if err != nil {
 		log.Fatalf("Failed to register grpcMux with server: %s", err)
 	}
