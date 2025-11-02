@@ -35,6 +35,21 @@ func (m *MockStore) EXPECT() *MockStoreMockRecorder {
 	return m.recorder
 }
 
+// CreateSession mocks base method.
+func (m *MockStore) CreateSession(arg0 context.Context, arg1 db.CreateSessionParams) (db.Session, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "CreateSession", arg0, arg1)
+	ret0, _ := ret[0].(db.Session)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// CreateSession indicates an expected call of CreateSession.
+func (mr *MockStoreMockRecorder) CreateSession(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateSession", reflect.TypeOf((*MockStore)(nil).CreateSession), arg0, arg1)
+}
+
 // CreateUser mocks base method.
 func (m *MockStore) CreateUser(arg0 context.Context, arg1 db.CreateUserParams) (db.User, error) {
 	m.ctrl.T.Helper()
